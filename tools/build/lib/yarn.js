@@ -1,17 +1,16 @@
-const { exec, resolveGlob } = require('../juke');
+import Juke from '../juke/index.js';
 
 let yarnPath;
 
-const yarn = (...args) => {
+export const yarn = (...args) => {
   if (!yarnPath) {
-    yarnPath = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
+    yarnPath = Juke.glob('./tgui/.yarn/releases/*.cjs')[0]
       .replace('/tgui/', '/');
   }
-  return exec('node', [yarnPath, ...args], {
+  return Juke.exec('node', [
+    yarnPath,
+    ...args.filter((arg) => typeof arg === 'string'),
+  ], {
     cwd: './tgui',
   });
-};
-
-module.exports = {
-  yarn,
 };
