@@ -104,6 +104,13 @@ const dm = async (dmeFile, options = {}) => {
   }
 };
 
+const getDefaultNamedByondVersionPath = () =>{
+  const all_entries = getAllNamedDmVersions(false)
+  const map_entry = all_entries.find(x => x.default == true);
+  if(map_entry === undefined)
+    return []
+  return [map_entry.path];
+}
 module.exports = {
   dm,
 };
