@@ -104,13 +104,9 @@ const dm = async (dmeFile, options = {}) => {
   }
 };
 
-const getDefaultNamedByondVersionPath = () =>{
-  const all_entries = getAllNamedDmVersions(false)
-  const map_entry = all_entries.find(x => x.default == true);
-  if(map_entry === undefined)
-    return []
-  return [map_entry.path];
-}
+/** @type {[{ name, path, default }]} */
+let namedDmVersionList;
+export const NamedVersionFile = "tools/build/dm_versions.json"
 
 const getAllNamedDmVersions = (throw_on_fail) => {
   if(!namedDmVersionList){
@@ -136,6 +132,11 @@ const getAllNamedDmVersions = (throw_on_fail) => {
   }
   return namedDmVersionList;
 }
-module.exports = {
-  dm,
-};
+const getDefaultNamedByondVersionPath = () =>{
+  const all_entries = getAllNamedDmVersions(false)
+  const map_entry = all_entries.find(x => x.default == true);
+  if(map_entry === undefined)
+    return []
+  return [map_entry.path];
+}
+
