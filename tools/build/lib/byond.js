@@ -1,4 +1,4 @@
-import fs from 'fs';
+const { stat } = require('./fs');
 import path from 'path';
 import Juke from '../juke/index.js';
 import { regQuery } from './winreg.js';
