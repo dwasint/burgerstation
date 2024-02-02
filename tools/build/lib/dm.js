@@ -19,13 +19,14 @@ const dm = async (dmeFile, options = {}) => {
   if (!dmPath) {
     dmPath = await (async () => {
       // Search in array of paths
-      const paths = [
-        ...((process.env.DM_EXE && process.env.DM_EXE.split(',')) || []),
-        'C:\\Program Files\\BYOND\\bin\\dm.exe',
-        'C:\\Program Files (x86)\\BYOND\\bin\\dm.exe',
-        ['reg', 'HKLM\\Software\\Dantom\\BYOND', 'installpath'],
-        ['reg', 'HKLM\\SOFTWARE\\WOW6432Node\\Dantom\\BYOND', 'installpath'],
-      ];
+       const paths = [
+      ...((process.env.DM_EXE && process.env.DM_EXE.split(',')) || []),
+      ...getDefaultNamedByondVersionPath(),
+      'C:\\Program Files\\BYOND\\bin\\dm.exe',
+      'C:\\Program Files (x86)\\BYOND\\bin\\dm.exe',
+      ['reg', 'HKLM\\Software\\Dantom\\BYOND', 'installpath'],
+      ['reg', 'HKLM\\SOFTWARE\\WOW6432Node\\Dantom\\BYOND', 'installpath'],
+    ];
       const isFile = path => {
         try {
           const fstat = stat(path);
