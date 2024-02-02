@@ -40,5 +40,3 @@ export const regQuery = async (path, key) => {
     return null;
   }
 };
-  regQuery,
-};
