@@ -47,7 +47,6 @@ const DmTarget = Juke.createTarget({
   inputs: [
     '_maps/map_files/generic/**',
     'code/**',
-    'goon/**',
     'html/**',
     'icons/**',
     'interface/**',
