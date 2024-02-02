@@ -1,4 +1,3 @@
-
 #!/usr/bin/env node
 /**
  * Build script for /tg/station 13 codebase.
