@@ -111,6 +111,31 @@ const getDefaultNamedByondVersionPath = () =>{
     return []
   return [map_entry.path];
 }
+
+const getAllNamedDmVersions = (throw_on_fail) => {
+  if(!namedDmVersionList){
+    if(!fs.existsSync(NamedVersionFile)){
+      if(throw_on_fail){
+        Juke.logger.error(`No byond version map file found.`);
+        throw new Juke.ExitCode(1);
+      }
+      namedDmVersionList = []
+      return namedDmVersionList;
+    }
+    try{
+      namedDmVersionList = JSON.parse(fs.readFileSync(NamedVersionFile));
+    }
+    catch(err){
+      if(throw_on_fail){
+        Juke.logger.error(`Failed to parse byond version map file. ${err}`);
+        throw new Juke.ExitCode(1);
+      }
+      namedDmVersionList = []
+      return namedDmVersionList;
+    }
+  }
+  return namedDmVersionList;
+}
 module.exports = {
   dm,
 };
