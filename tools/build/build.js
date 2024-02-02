@@ -97,7 +97,7 @@ const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
 Juke
   .setup({
-    default: TGS_MODE ? null : DefaultTarget, // TgsTarget
+    default: DefaultTarget, // TgsTarget
   })
   .then((code) => {
     process.exit(code);
