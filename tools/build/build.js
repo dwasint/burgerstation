@@ -1,27 +1,39 @@
+
 #!/usr/bin/env node
 /**
  * Build script for /tg/station 13 codebase.
  *
  * This script uses Juke Build, read the docs here:
  * https://github.com/stylemistake/juke-build
+ *
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
  */
 
-import fs from 'fs';
-import { get } from 'http';
-import { env } from 'process';
-import Juke from './juke/index.js';
-import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
+// Change working directory to project root
+process.chdir(require('path').resolve(__dirname, '../../'));
 
-Juke.chdir('../..', import.meta.url);
-Juke.setup({ file: import.meta.url }).then((code) => {
-  // We're using the currently available quirk in Juke Build, which
-  // prevents it from exiting on Windows, to wait on errors.
-  if (code !== 0 && process.argv.includes('--wait-on-error')) {
-    Juke.logger.error('Please inspect the error and close the window.');
-    return;
-  }
-  process.exit(code);
-});
+// Validate NodeJS version
+const NODE_VERSION = parseInt(process.versions.node.match(/(\d+)/)[1]);
+const NODE_VERSION_TARGET = parseInt(require('fs')
+  .readFileSync('dependencies.sh', 'utf-8')
+  .match(/NODE_VERSION=(\d+)/)[1]);
+if (NODE_VERSION < NODE_VERSION_TARGET) {
+  console.error('Your current Node.js version is out of date.');
+  console.error('You have two options:');
+  console.error('  a) Go to https://nodejs.org/ and install the latest LTS release of Node.js');
+  console.error('  b) Uninstall Node.js (our build system automatically downloads one)');
+  process.exit(1);
+}
+
+// Main
+// --------------------------------------------------------
+
+const fs = require('fs');
+const Juke = require('./juke');
+const { yarn } = require('./cbt/yarn');
+const { dm } = require('./cbt/dm');
 
 const DME_NAME = 'burgerstation';
 
