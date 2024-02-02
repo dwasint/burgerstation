@@ -32,7 +32,7 @@ if (NODE_VERSION < NODE_VERSION_TARGET) {
 const fs = require('fs');
 const Juke = require('./juke');
 const { yarn } = require('./lib/yarn');
-const { dm } = require('./lib/dm');
+const { dm } = require('./lib/byond');
 
 const DME_NAME = 'burgerstation';
 
